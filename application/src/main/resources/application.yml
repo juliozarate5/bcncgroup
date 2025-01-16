@@ -13,7 +13,8 @@ spring:
       path: /h2
 
   datasource:
-    url: jdbc:h2:mem:prices
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:prices;DB_CLOSE_DELAY=-1
     username: sa
     password:
 
@@ -22,4 +23,5 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        format_sql: true
