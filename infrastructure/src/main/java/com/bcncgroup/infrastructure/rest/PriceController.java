@@ -1,8 +1,11 @@
-package com.bcncgroup.application.controller;
+package com.bcncgroup.infrastructure.rest;
 
-import com.bcncgroup.domain.service.PriceService;
+import com.bcncgroup.application.service.PriceService;
+import com.bcncgroup.domain.dto.ErrorDTO;
 import com.bcncgroup.domain.dto.PriceResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,14 +34,29 @@ public class PriceController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "500", description = "Internal Error Server"),
-                    @ApiResponse(responseCode = "400", description = "Bad Request"),
-                    @ApiResponse(responseCode = "404", description = "Not Found")
+                    @ApiResponse(responseCode = "500", description = "Internal Error Server", content =
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorDTO.class)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Bad Request", content =
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorDTO.class)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "404", description = "Not Found", content =
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                        )
+                    )
             }
     )
     @Operation(
             summary = "Get Prices by params",
-            description = "Get Prices by Application Date, Product ID & Brand ID"
+            description = "Get Price of prices by Application Date, Product ID & Brand ID & priority"
     )
     @ResponseStatus(HttpStatus.OK)
     @GetMapping

@@ -16,6 +16,8 @@ public class Product {
 
     Long id;
 
+    Long code;
+
     String name;
 
     String description;

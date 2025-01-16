@@ -1,15 +1,13 @@
-package com.bcncgroup.application.config;
+package com.bcncgroup.infrastructure.config;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "com.bcncgroup.infrastructure.rest.controller")
 public class SwaggerConfiguration {
 
     @Bean

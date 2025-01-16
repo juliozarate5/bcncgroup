@@ -1,9 +1,9 @@
-package com.bcncgroup.infrastructure.config;
+package com.bcncgroup.application.config;
 
 import com.bcncgroup.domain.dto.ErrorDTO;
-import com.bcncgroup.infrastructure.exceptions.BadRequestException;
-import com.bcncgroup.infrastructure.exceptions.InternalServerErrorException;
-import com.bcncgroup.infrastructure.exceptions.NotFoundException;
+import com.bcncgroup.domain.exceptions.BadRequestException;
+import com.bcncgroup.domain.exceptions.InternalServerErrorException;
+import com.bcncgroup.domain.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({InternalServerErrorException.class})
     public ResponseEntity<ErrorDTO> getGeneralException(InternalServerErrorException e) {
-       // log.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return new ResponseEntity<>(e.getErrorDto(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -42,7 +42,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BadRequestException.class})
     public ResponseEntity<ErrorDTO> getBadRequestException(BadRequestException e) {
-      //  log.info(e.getErrorDto().getMessage());
+        log.info(e.getErrorDto().getMessage());
         return new ResponseEntity<>(e.getErrorDto(), HttpStatus.BAD_REQUEST);
     }
 }

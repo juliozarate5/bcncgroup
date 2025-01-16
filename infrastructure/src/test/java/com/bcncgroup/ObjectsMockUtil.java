@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-public final class ObjectsTest {
+public final class ObjectsMockUtil {
 
     public static PriceResponseDTO priceResponseDTOMock() {
         return PriceResponseDTO.builder()

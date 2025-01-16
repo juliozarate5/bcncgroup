@@ -1,4 +1,4 @@
-package com.bcncgroup.infrastructure.exceptions;
+package com.bcncgroup.domain.exceptions;
 
 import com.bcncgroup.domain.dto.ErrorDTO;
 

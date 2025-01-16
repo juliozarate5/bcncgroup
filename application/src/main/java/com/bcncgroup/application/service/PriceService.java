@@ -1,4 +1,4 @@
-package com.bcncgroup.domain.service;
+package com.bcncgroup.application.service;
 
 import com.bcncgroup.domain.dto.PriceResponseDTO;
 

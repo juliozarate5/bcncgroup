@@ -55,6 +55,7 @@
       <scope>test</scope>
     </dependency>
 
+
     <!-- SWAGGER -->
     <!--  https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui  -->
     <dependency>
@@ -117,6 +118,21 @@
       <scope>runtime</scope>
     </dependency>
 
+
+    <!--  Mapstruct  -->
+    <!--  https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>1.6.2</version>
+    </dependency>
+    <!--  https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor  -->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct-processor</artifactId>
+      <version>1.6.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -125,6 +141,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
+          <mainClass>com.bcncgroup.infrastructure.InfrastructureApplication</mainClass>
           <excludes>
             <exclude>
               <groupId>org.projectlombok</groupId>

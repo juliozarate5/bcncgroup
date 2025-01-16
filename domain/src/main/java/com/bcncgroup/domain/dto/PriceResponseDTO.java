@@ -1,6 +1,7 @@
 package com.bcncgroup.domain.dto;
 
 import com.bcncgroup.domain.enums.PriceListEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,8 +30,13 @@ public class PriceResponseDTO implements Serializable {
     @JsonProperty("brand_id")
     Long brandId;
 
-    @JsonProperty("price_list") // tax to applicate
+    @JsonIgnore // tax to applicate
     PriceListEnum priceList;
+
+    @JsonProperty("price_list") // Agregar una propiedad para mostrar el orden
+    public int getPriceListOrder() {
+        return priceList != null ? priceList.ordinal() : -1;
+    }
 
     @JsonProperty("start_date")
     LocalDateTime startDate;
