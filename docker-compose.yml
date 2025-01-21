@@ -1,0 +1,7 @@
+version : '3.7'
+services :
+  ecommerce-price :
+    build : .
+    ports:
+      - "8084:8084"
+    restart: always
