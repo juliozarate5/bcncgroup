@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -39,12 +40,15 @@ public class DomainPriceServiceImpl implements PriceService {
         this.priceRepository = priceRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PriceResponseDTO> getPrices(
             final LocalDateTime appDate, final Long productId, final Long brandId) {
         try {
+
             // TODO: VALIDAR & get BRAND
-            final List<Price> prices = priceRepository.findPricesByParams(appDate, getProduct(productId).getId(), brandId);
+            final Product product = this.getProduct(productId);
+            final List<Price> prices = priceRepository.findPricesByParams(appDate, product.getId(), brandId);
             Price price = prices.stream()
                     .max(Comparator.comparingInt(Price::getPriority))
                     .orElseThrow(() -> new BadRequestException("No valid price found"));
