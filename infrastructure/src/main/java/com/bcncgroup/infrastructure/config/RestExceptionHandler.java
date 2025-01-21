@@ -19,23 +19,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private boolean isSwaggerRequest() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes != null) {
-            HttpServletRequest request = attributes.getRequest();
-            String path = request.getRequestURI();
-            return path.startsWith("/api/v1/swagger-ui/") || path.startsWith("/api/v1/v3/api-docs");
-        }
-        return false;
-    }
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorDTO> getGeneralException(Exception e) {
-        if (isSwaggerRequest()) {
-            log.warn("Exception ignored for Swagger request: {}", e.getMessage());
-            return null; // Dejar que Swagger maneje la excepción
-        }
         log.error(e.getMessage(), e);
         ErrorDTO errorRq = ErrorDTO.getErrorDto(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -45,10 +31,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({InternalServerErrorException.class})
     public ResponseEntity<ErrorDTO> getGeneralException(InternalServerErrorException e) {
-        if (isSwaggerRequest()) {
-            log.warn("Exception ignored for Swagger request: {}", e.getMessage());
-            return null; // Dejar que Swagger maneje la excepción
-        }
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(e.getErrorDto(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -56,10 +38,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<ErrorDTO> getNotFoundRquest(NotFoundException e) {
-        if (isSwaggerRequest()) {
-            log.warn("Exception ignored for Swagger request: {}", e.getMessage());
-            return null; // Dejar que Swagger maneje la excepción
-        }
         log.info(e.getMessage());
         return new ResponseEntity<>(e.getErrorDto(), HttpStatus.NOT_FOUND);
     }
@@ -67,10 +45,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BadRequestException.class})
     public ResponseEntity<ErrorDTO> getBadRequestException(BadRequestException e) {
-        if (isSwaggerRequest()) {
-            log.warn("Exception ignored for Swagger request: {}", e.getMessage());
-            return null; // Dejar que Swagger maneje la excepción
-        }
         log.info(e.getErrorDto().getMessage());
         return new ResponseEntity<>(e.getErrorDto(), HttpStatus.BAD_REQUEST);
     }
