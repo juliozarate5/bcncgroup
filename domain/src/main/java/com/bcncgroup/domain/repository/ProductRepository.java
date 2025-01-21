@@ -1,5 +1,6 @@
 package com.bcncgroup.domain.repository;
 
+
 import com.bcncgroup.domain.exceptions.NotFoundException;
 import com.bcncgroup.domain.model.Product;
 
