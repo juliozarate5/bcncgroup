@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication(scanBasePackages = {"com.bcncgroup.application", "com.bcncgroup.infrastructure"})
+@SpringBootApplication
 public class InfrastructureApplication {
 
     public static void main(String[] args) {

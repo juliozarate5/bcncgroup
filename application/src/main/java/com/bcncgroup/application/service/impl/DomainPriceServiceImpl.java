@@ -43,8 +43,8 @@ public class DomainPriceServiceImpl implements PriceService {
     public List<PriceResponseDTO> getPrices(
             final LocalDateTime appDate, final Long productId, final Long brandId) {
         try {
-            // TODO: VALIDAR BRAND
-            final List<Price> prices = priceRepository.findPricesByParams(appDate, validateProduct(productId).getId(), brandId);
+            // TODO: VALIDAR & get BRAND
+            final List<Price> prices = priceRepository.findPricesByParams(appDate, getProduct(productId).getId(), brandId);
             Price price = prices.stream()
                     .max(Comparator.comparingInt(Price::getPriority))
                     .orElseThrow(() -> new BadRequestException("No valid price found"));
@@ -62,11 +62,12 @@ public class DomainPriceServiceImpl implements PriceService {
         }
     }
 
-    private Product validateProduct(final Long code) {
+    private Product getProduct(final Long code) {
         return productRepository.findProductByCode(code).orElseThrow(
                 () -> new NotFoundException(
                         ErrorDTO.builder()
                                 .error(HttpStatus.NOT_FOUND.getReasonPhrase())
+                                .status(HttpStatus.NOT_FOUND.value())
                                 .message("No existe producto")
                                 .date(LocalDateTime.now())
                                 .build()
