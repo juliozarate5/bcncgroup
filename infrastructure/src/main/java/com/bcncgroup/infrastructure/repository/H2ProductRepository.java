@@ -1,6 +1,5 @@
 package com.bcncgroup.infrastructure.repository;
 
-import com.bcncgroup.domain.exceptions.NotFoundException;
 import com.bcncgroup.domain.model.Product;
 import com.bcncgroup.domain.repository.ProductRepository;
 import com.bcncgroup.infrastructure.mapper.ProductMapper;
@@ -24,12 +23,8 @@ public class H2ProductRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findProductByCode(final Long code) throws NotFoundException {
-        final ProductEntity productEntity = productJpaRepository.findByCode(code)
-                .orElse(null);
-        if(productEntity == null) {
-            return Optional.empty();
-        }
-        return Optional.of(priceMapper.toProduct(productEntity));
+    public Optional<Product> findProductByCode(final Long code){
+        final Optional<ProductEntity> productEntity = productJpaRepository.findByCode(code);
+        return priceMapper.toProductOptional(productEntity);
     }
 }
