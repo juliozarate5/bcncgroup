@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,7 @@ public class PriceController {
                     @ApiResponse(responseCode = "400", description = "Bad Request", content =
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ErrorDTO.class)
+                                    schema = @Schema(implementation = ProblemDetail.class)
                             )
                     ),
                     @ApiResponse(responseCode = "404", description = "Not Found", content =
