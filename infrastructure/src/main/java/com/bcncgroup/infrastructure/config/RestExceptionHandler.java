@@ -1,21 +1,19 @@
 package com.bcncgroup.infrastructure.config;
 
-import com.bcncgroup.domain.dto.ErrorDTO;
-import com.bcncgroup.domain.exceptions.BadRequestException;
-import com.bcncgroup.domain.exceptions.InternalServerErrorException;
-import com.bcncgroup.domain.exceptions.NotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
+import com.bcncgroup.application.exceptions.InternalServerErrorException;
+import com.bcncgroup.application.exceptions.NotFoundException;
+import com.bcncgroup.infrastructure.rest.dto.ErrorDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice(basePackages = "com.bcncgroup.infrastructure.rest")
+import java.time.LocalDateTime;
+
+@RestControllerAdvice(basePackages = "com.bcncgroup.infrastructure.rest")
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -23,7 +21,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorDTO> getGeneralException(Exception e) {
         log.error(e.getMessage(), e);
-        ErrorDTO errorRq = ErrorDTO.getErrorDto(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage(),
+        ErrorDTO errorRq = ErrorDTO.getErrorDto(
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(errorRq, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -32,20 +31,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({InternalServerErrorException.class})
     public ResponseEntity<ErrorDTO> getGeneralException(InternalServerErrorException e) {
         log.error(e.getMessage(), e);
-        return new ResponseEntity<>(e.getErrorDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return getErrorDTO(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<ErrorDTO> getNotFoundRquest(NotFoundException e) {
         log.info(e.getMessage());
-        return new ResponseEntity<>(e.getErrorDto(), HttpStatus.NOT_FOUND);
+        return getErrorDTO(HttpStatus.NOT_FOUND, e);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({BadRequestException.class})
-    public ResponseEntity<ErrorDTO> getBadRequestException(BadRequestException e) {
-        log.info(e.getErrorDto().getMessage());
-        return new ResponseEntity<>(e.getErrorDto(), HttpStatus.BAD_REQUEST);
+    private ResponseEntity<ErrorDTO> getErrorDTO(HttpStatus httpStatus, Exception e) {
+        final ErrorDTO errorDTO = ErrorDTO.builder()
+                .error(httpStatus.getReasonPhrase())
+                .status(httpStatus.value())
+                .message(e.getMessage())
+                .date(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorDTO, httpStatus);
     }
 }

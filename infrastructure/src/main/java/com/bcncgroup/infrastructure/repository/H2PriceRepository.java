@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 /**
  * Adapter: Implementing of Domain repository
@@ -28,12 +28,12 @@ public class H2PriceRepository implements PriceRepository {
     }
 
     @Override
-    public List<Price> findPricesByParams(final LocalDateTime appDate,
+    public Optional<Price> findPricesByParams(final LocalDateTime appDate,
                                           final Long productId,
                                           final Long brandId
                                           ) {
-        final List<PriceEntity> priceEntityList =
+        final Optional<PriceEntity> priceEntityOptional =
                 priceJpaRepository.findByAppDateAndProductIdAndBrandId(appDate, productId, brandId);
-        return priceMapper.toPriceList(priceEntityList);
+        return priceMapper.toPriceOptional(priceEntityOptional);
     }
 }

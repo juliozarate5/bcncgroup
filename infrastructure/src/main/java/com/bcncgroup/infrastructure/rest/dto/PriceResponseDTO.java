@@ -1,4 +1,4 @@
-package com.bcncgroup.domain.dto;
+package com.bcncgroup.infrastructure.rest.dto;
 
 import com.bcncgroup.domain.enums.PriceListEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;

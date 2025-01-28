@@ -1,14 +1,13 @@
 package com.bcncgroup.application.service;
 
-import com.bcncgroup.domain.dto.PriceResponseDTO;
+import com.bcncgroup.domain.model.Price;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface PriceService {
 
     // ... rest of methods
 
-    List<PriceResponseDTO> getPrices(LocalDateTime appDate, Long productId, Long brandId);
+    Price getPrice(LocalDateTime appDate, Long productId, Long brandId);
 
 }

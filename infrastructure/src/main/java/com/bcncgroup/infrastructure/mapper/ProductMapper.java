@@ -5,6 +5,8 @@ import com.bcncgroup.infrastructure.persistence.jpa.entity.ProductEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Optional;
+
 @Mapper
 public interface ProductMapper {
 
@@ -12,4 +14,7 @@ public interface ProductMapper {
 
     Product toProduct(ProductEntity productEntity);
 
+    default Optional<Product> toProductOptional(Optional<ProductEntity> productOptional) {
+        return productOptional.map(this::toProduct);
+    }
 }

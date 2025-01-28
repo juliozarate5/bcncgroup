@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PriceJpaRepository
@@ -18,8 +18,9 @@ public interface PriceJpaRepository
             "AND :appDate <= p.endDate " +
             "AND p.product.id = :productId " +
             "AND p.brand.id = :brandId " +
-            "ORDER BY p.priority DESC")
-    List<PriceEntity> findByAppDateAndProductIdAndBrandId(
+            "ORDER BY p.priority DESC " +
+            "LIMIT 1")
+    Optional<PriceEntity> findByAppDateAndProductIdAndBrandId(
             @Param("appDate") LocalDateTime appDate,
             @Param("productId") Long productId,
             @Param("brandId") Long brandId
