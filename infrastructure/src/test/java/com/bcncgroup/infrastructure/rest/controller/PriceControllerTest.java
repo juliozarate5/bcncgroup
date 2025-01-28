@@ -1,9 +1,9 @@
 package com.bcncgroup.infrastructure.rest.controller;
 
 import com.bcncgroup.ObjectsMockUtil;
+import com.bcncgroup.infrastructure.rest.dto.PriceResponseDTO;
 import com.bcncgroup.infrastructure.rest.PriceController;
 import com.bcncgroup.application.service.PriceService;
-import com.bcncgroup.domain.dto.PriceResponseDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,21 +35,20 @@ class PriceControllerTest {
         final Long productId = 35455L;
         final Long brandId = 1L;
         Mockito.when(
-                priceService.getPrices(
+                priceService.getPrice(
                                 ArgumentMatchers.any(),
                                 ArgumentMatchers.anyLong(),
                                 ArgumentMatchers.anyLong()
                         )
-                ).thenReturn(ObjectsMockUtil.priceResponseDTOListMock());
-        final ResponseEntity<List<PriceResponseDTO>> response =
+                ).thenReturn(ObjectsMockUtil.priceMock());
+        final ResponseEntity<PriceResponseDTO> response =
                 priceController.getPrices(
                         appDate, productId, brandId
                 );
         assertNotNull(response);
         assertEquals(response.getStatusCode().value(), HttpStatus.OK.value());
-        final List<PriceResponseDTO> items = response.getBody();
-        assertNotNull(items);
-        assertTrue(items.size() > 0);
+        final PriceResponseDTO item = response.getBody();
+        assertNotNull(item);
     }
 
 }

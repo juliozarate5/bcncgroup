@@ -1,6 +1,6 @@
 package com.bcncgroup.infrastructure.rest.controller;
 
-import com.bcncgroup.domain.dto.PriceResponseDTO;
+import com.bcncgroup.infrastructure.rest.dto.PriceResponseDTO;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,21 +32,21 @@ class PriceControllerIntegrationTest {
         HttpStatus expected = HttpStatus.OK;
 
         // When
-        ResponseEntity<PriceResponseDTO[]> actual =
+        ResponseEntity<PriceResponseDTO> actual =
                 testRestTemplate.getForEntity(
                         "http://localhost:"+port+"/api/v1/prices?application_date=2020-06-14T10:00:00&product_id=35455&brand_id=1",
-                        PriceResponseDTO[].class
+                        PriceResponseDTO.class
                 );
 
         // Then
         BDDAssertions.then(actual.getStatusCode()).isEqualTo(expected);
-        BDDAssertions.then(actual.getBody()).isNotEmpty();
+        BDDAssertions.then(actual.getBody()).isNotNull();
 
-        BDDAssertions.then(actual.getBody()[0].getProductId()).isEqualTo(35455L);
-        BDDAssertions.then(actual.getBody()[0].getBrandId()).isEqualTo(1);
-        BDDAssertions.then(actual.getBody()[0].getStartDate()).isEqualTo("2020-06-14T00:00:00");
-        BDDAssertions.then(actual.getBody()[0].getEndDate()).isEqualTo( "2020-12-31T23:59:59");
-        BDDAssertions.then(actual.getBody()[0].getTotal()).isEqualTo(new BigDecimal("35.50"));
+        BDDAssertions.then(actual.getBody().getProductId()).isEqualTo(35455L);
+        BDDAssertions.then(actual.getBody().getBrandId()).isEqualTo(1);
+        BDDAssertions.then(actual.getBody().getStartDate()).isEqualTo("2020-06-14T00:00:00");
+        BDDAssertions.then(actual.getBody().getEndDate()).isEqualTo( "2020-12-31T23:59:59");
+        BDDAssertions.then(actual.getBody().getTotal()).isEqualTo(new BigDecimal("35.50"));
     }
 
     @DisplayName("Test 2 get prices by params: appDate, productId & brandId successful")
@@ -56,21 +56,21 @@ class PriceControllerIntegrationTest {
         HttpStatus expected = HttpStatus.OK;
 
         // When
-        ResponseEntity<PriceResponseDTO[]> actual =
+        ResponseEntity<PriceResponseDTO> actual =
                 testRestTemplate.getForEntity(
                         "http://localhost:"+port+"/api/v1/prices?application_date=2020-06-14T16:00:00&product_id=35455&brand_id=1",
-                        PriceResponseDTO[].class
+                        PriceResponseDTO.class
                 );
 
         // Then
         BDDAssertions.then(actual.getStatusCode()).isEqualTo(expected);
-        BDDAssertions.then(actual.getBody()).isNotEmpty();
+        BDDAssertions.then(actual.getBody()).isNotNull();
 
-        BDDAssertions.then(actual.getBody()[0].getProductId()).isEqualTo(35455L);
-        BDDAssertions.then(actual.getBody()[0].getBrandId()).isEqualTo(1);
-        BDDAssertions.then(actual.getBody()[0].getStartDate()).isEqualTo("2020-06-14T15:00:00");
-        BDDAssertions.then(actual.getBody()[0].getEndDate()).isEqualTo( "2020-06-14T18:30:00");
-        BDDAssertions.then(actual.getBody()[0].getTotal()).isEqualTo(BigDecimal.valueOf(25.45));
+        BDDAssertions.then(actual.getBody().getProductId()).isEqualTo(35455L);
+        BDDAssertions.then(actual.getBody().getBrandId()).isEqualTo(1);
+        BDDAssertions.then(actual.getBody().getStartDate()).isEqualTo("2020-06-14T15:00:00");
+        BDDAssertions.then(actual.getBody().getEndDate()).isEqualTo( "2020-06-14T18:30:00");
+        BDDAssertions.then(actual.getBody().getTotal()).isEqualTo(BigDecimal.valueOf(25.45));
     }
 
     @DisplayName("Test 3 get prices by params: appDate, productId & brandId successful")
@@ -80,21 +80,21 @@ class PriceControllerIntegrationTest {
         HttpStatus expected = HttpStatus.OK;
 
         // When
-        ResponseEntity<PriceResponseDTO[]> actual =
+        ResponseEntity<PriceResponseDTO> actual =
                 testRestTemplate.getForEntity(
                         "http://localhost:"+port+"/api/v1/prices?application_date=2020-06-14T21:00:00&product_id=35455&brand_id=1",
-                        PriceResponseDTO[].class
+                        PriceResponseDTO.class
                 );
 
         // Then
         BDDAssertions.then(actual.getStatusCode()).isEqualTo(expected);
-        BDDAssertions.then(actual.getBody()).isNotEmpty();
+        BDDAssertions.then(actual.getBody()).isNotNull();
 
-        BDDAssertions.then(actual.getBody()[0].getProductId()).isEqualTo(35455L);
-        BDDAssertions.then(actual.getBody()[0].getBrandId()).isEqualTo(1);
-        BDDAssertions.then(actual.getBody()[0].getStartDate()).isEqualTo("2020-06-14T00:00:00");
-        BDDAssertions.then(actual.getBody()[0].getEndDate()).isEqualTo( "2020-12-31T23:59:59");
-        BDDAssertions.then(actual.getBody()[0].getTotal()).isEqualTo(new BigDecimal("35.50"));
+        BDDAssertions.then(actual.getBody().getProductId()).isEqualTo(35455L);
+        BDDAssertions.then(actual.getBody().getBrandId()).isEqualTo(1);
+        BDDAssertions.then(actual.getBody().getStartDate()).isEqualTo("2020-06-14T00:00:00");
+        BDDAssertions.then(actual.getBody().getEndDate()).isEqualTo( "2020-12-31T23:59:59");
+        BDDAssertions.then(actual.getBody().getTotal()).isEqualTo(new BigDecimal("35.50"));
     }
 
     @DisplayName("Test 4 get prices by params: appDate, productId & brandId successful")
@@ -104,21 +104,21 @@ class PriceControllerIntegrationTest {
         HttpStatus expected = HttpStatus.OK;
 
         // When
-        ResponseEntity<PriceResponseDTO[]> actual =
+        ResponseEntity<PriceResponseDTO> actual =
                 testRestTemplate.getForEntity(
                         "http://localhost:"+port+"/api/v1/prices?application_date=2020-06-15T10:00:00&product_id=35455&brand_id=1",
-                        PriceResponseDTO[].class
+                        PriceResponseDTO.class
                 );
 
         // Then
         BDDAssertions.then(actual.getStatusCode()).isEqualTo(expected);
-        BDDAssertions.then(actual.getBody()).isNotEmpty();
+        BDDAssertions.then(actual.getBody()).isNotNull();
 
-        BDDAssertions.then(actual.getBody()[0].getProductId()).isEqualTo(35455L);
-        BDDAssertions.then(actual.getBody()[0].getBrandId()).isEqualTo(1);
-        BDDAssertions.then(actual.getBody()[0].getStartDate()).isEqualTo("2020-06-15T00:00:00");
-        BDDAssertions.then(actual.getBody()[0].getEndDate()).isEqualTo( "2020-06-15T11:00:00");
-        BDDAssertions.then(actual.getBody()[0].getTotal()).isEqualTo(new BigDecimal("30.50"));
+        BDDAssertions.then(actual.getBody().getProductId()).isEqualTo(35455L);
+        BDDAssertions.then(actual.getBody().getBrandId()).isEqualTo(1);
+        BDDAssertions.then(actual.getBody().getStartDate()).isEqualTo("2020-06-15T00:00:00");
+        BDDAssertions.then(actual.getBody().getEndDate()).isEqualTo( "2020-06-15T11:00:00");
+        BDDAssertions.then(actual.getBody().getTotal()).isEqualTo(new BigDecimal("30.50"));
     }
 
     @DisplayName("Test 5 get prices by params: appDate, productId & brandId successful")
@@ -128,22 +128,22 @@ class PriceControllerIntegrationTest {
         HttpStatus expected = HttpStatus.OK;
 
         // When
-        ResponseEntity<PriceResponseDTO[]> actual =
+        ResponseEntity<PriceResponseDTO> actual =
                 testRestTemplate.getForEntity(
                         "http://localhost:"+port+"/api/v1/prices?application_date=2020-06-16T21:00:00&product_id=35455&brand_id=1",
-                        PriceResponseDTO[].class
+                        PriceResponseDTO.class
                 );
 
         // Then
 
         BDDAssertions.then(actual.getStatusCode()).isEqualTo(expected);
-        BDDAssertions.then(actual.getBody()).isNotEmpty();
+        BDDAssertions.then(actual.getBody()).isNotNull();
 
-        BDDAssertions.then(actual.getBody()[0].getProductId()).isEqualTo(35455L);
-        BDDAssertions.then(actual.getBody()[0].getBrandId()).isEqualTo(1);
-        BDDAssertions.then(actual.getBody()[0].getStartDate()).isEqualTo("2020-06-15T16:00:00");
-        BDDAssertions.then(actual.getBody()[0].getEndDate()).isEqualTo( "2020-12-31T23:59:59");
-        BDDAssertions.then(actual.getBody()[0].getTotal()).isEqualTo(BigDecimal.valueOf(39.95));
+        BDDAssertions.then(actual.getBody().getProductId()).isEqualTo(35455L);
+        BDDAssertions.then(actual.getBody().getBrandId()).isEqualTo(1);
+        BDDAssertions.then(actual.getBody().getStartDate()).isEqualTo("2020-06-15T16:00:00");
+        BDDAssertions.then(actual.getBody().getEndDate()).isEqualTo( "2020-12-31T23:59:59");
+        BDDAssertions.then(actual.getBody().getTotal()).isEqualTo(BigDecimal.valueOf(39.95));
 
         //...
     }

@@ -1,8 +1,9 @@
 package com.bcncgroup.infrastructure.rest;
 
 import com.bcncgroup.application.service.PriceService;
-import com.bcncgroup.domain.dto.ErrorDTO;
-import com.bcncgroup.domain.dto.PriceResponseDTO;
+import com.bcncgroup.infrastructure.mapper.PriceMapper;
+import com.bcncgroup.infrastructure.rest.dto.ErrorDTO;
+import com.bcncgroup.infrastructure.rest.dto.PriceResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,13 +18,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Tag(name = "Endpoints Prices Controller", description = "Prices Controller")
 @RestController
 @RequestMapping("/prices")
 @Slf4j
 public class PriceController {
+
+    private static final PriceMapper priceMapper = PriceMapper.INSTANCE;
 
     private final PriceService priceService;
 
@@ -60,14 +62,14 @@ public class PriceController {
     )
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public ResponseEntity<List<PriceResponseDTO>> getPrices(
+    public ResponseEntity<PriceResponseDTO> getPrices(
             @RequestParam("application_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appDate,
             @RequestParam("product_id") Long productId,
             @RequestParam("brand_id") Long brandId
     ) {
         log.info("Executing getPrices from Controller");
         return ResponseEntity.ok(
-                priceService.getPrices(appDate, productId, brandId)
+                priceMapper.toPriceResponseDTO(priceService.getPrice(appDate, productId, brandId))
         );
     }
 }

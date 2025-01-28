@@ -1,4 +1,4 @@
-package com.bcncgroup.domain.dto;
+package com.bcncgroup.infrastructure.rest.dto;
 
 import lombok.Builder;
 import lombok.Getter;
